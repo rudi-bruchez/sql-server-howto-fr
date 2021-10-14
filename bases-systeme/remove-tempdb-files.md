@@ -8,9 +8,9 @@ En général, quatre ou huit fichiers suffisent.
 
 Si vous avez créé trop de fichiers, comment faire pout en diminuer le nombre ? L'opération habituelle est de vider les fichiers, et de les supprimer ensuite.
 
-Pas si facile dans `tempdb`. [Erin Stellato a blogué sur le sujet en 2017](https://www.sqlskills.com/blogs/erin/remove-files-from-tempdb/)
+Pas si facile dans `tempdb`. [Erin Stellato a blogué sur le sujet en 2017](https://www.sqlskills.com/blogs/erin/remove-files-from-tempdb/).
 
-La commande suivante, qui sert à vider un fichier pour le supprimer ensuite, provoque en général une erreur indiquant que la fichier contient une table de travail, qui bloque le vidage du fichier.
+La commande suivante, qui sert à vider un fichier pour le supprimer ensuite, provoque en général une erreur indiquant que le fichier contient une table de travail, qui bloque le vidage du fichier.
 
 ```sql
 USE [tempdb];
