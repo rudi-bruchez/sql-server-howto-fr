@@ -1,3 +1,3 @@
 # Liens utiles
 
-- [DBMS Tools](https://dbmstools.com/) &mdash; Database Tools Catalog
+- [DBMS Tools](https://dbmstools.com/databases/sqlserver) &mdash; Database Tools Catalog
