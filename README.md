@@ -1,4 +1,4 @@
-# sql-server-howto
+# SQL Server HowTo
 
 Aide pour opérations administratives, développement et optimisation dans Microsoft SQL Server
 
