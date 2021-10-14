@@ -23,4 +23,5 @@ La solution d'Erin Stellato est de redémarrer SQL Server en mode de configurati
 
 Andy Mallon [propose une solution qui semble fonctionner](https://am2.co/2020/04/fixing-tempdb/) (je ne l'ai pas encore testée). Je vous renvoie à son blog. L'idée est de créer un travail de l'agent SQL qui effectue es opération au démarrage du service. En effet, on peut planifier un travail pour s'exécuter au moment du démarrage, avant que SQL Server ait eu le temps de créer les fichiers de travail dans `tempdb`.
 
-<div style="text-align: right"> *[Besoin de services avec SQL Server ? Contactez-moi](https://www.pachadata.com/contact/)*</div>
+
+*[Besoin de services avec SQL Server ? Contactez-moi](https://www.pachadata.com/contact/)*
