@@ -32,7 +32,7 @@ Les commandes Transact-SQL pour effectuer un SHRINK sont :
     
     ![réduction](shrink-database-file_media/shrink-database-file.01.png)
     
-    Sélectionnez l'opton qui permet de définir une taille cible.
+    Sélectionnez l'option qui permet de définir une taille cible.
 
     ![réduction](shrink-database-file_media/shrink-database-file.02.png)
     
