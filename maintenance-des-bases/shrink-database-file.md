@@ -72,32 +72,42 @@ Les commandes Transact-SQL pour effectuer un SHRINK sont :
 
     La commande est non bloquante. Selon la taille du fichier, elle peut durer longtemps, ce n'est pas très grave.
 
-    ### Comment savoir où on en est ?
+### Comment surveiller l'opération ?
 
-    L'exécution de la commande peut être suivie par une requête sur `sys.dm_exec_requests`. Des exemples complets de requêtes sur cette vue peuvent être trouvés ici : [https://github.com/rudi-bruchez/tsql-scripts/tree/master/diagnostics/execution](https://github.com/rudi-bruchez/tsql-scripts/tree/master/diagnostics/execution).
+L'exécution de la commande peut être suivie par une requête sur `sys.dm_exec_requests`. Des exemples complets de requêtes sur cette vue peuvent être trouvés ici : [https://github.com/rudi-bruchez/tsql-scripts/tree/master/diagnostics/execution](https://github.com/rudi-bruchez/tsql-scripts/tree/master/diagnostics/execution).
 
-    Voici une requête qui vous montre l'opération en cours (à exécuter donc dans une autre fenêtre de SSMS).
+Voici une requête qui vous montre l'opération en cours (à exécuter donc dans une autre fenêtre de SSMS).
 
-    ```sql
-    SELECT 
-        session_id,
-        start_time,
-        status,
-        DB_NAME(database_id) as [db],
-        blocking_session_id,
-        wait_time,
-        wait_type,
-        wait_resource,
-        percent_complete,
-        total_elapsed_time
-    FROM sys.dm_exec_requests WITH (READUNCOMMITTED)
-    WHERE command IN (N'DbccFilesCompact', N'DbccSpaceReclaim')
-    OPTION (RECOMPILE, MAXDOP 1);
-    ```
+```sql
+SELECT 
+    session_id,
+    start_time,
+    status,
+    DB_NAME(database_id) as [db],
+    blocking_session_id,
+    wait_time,
+    wait_type,
+    wait_resource,
+    percent_complete,
+    total_elapsed_time
+FROM sys.dm_exec_requests WITH (READUNCOMMITTED)
+WHERE command IN (N'DbccFilesCompact', N'DbccSpaceReclaim')
+OPTION (RECOMPILE, MAXDOP 1);
+```
 
-    La colonne `percent_complete` vous indique un pourcentage estimé de l'achèvement de la commande.
+La colonne `percent_complete` vous indique un pourcentage estimé de l'achèvement de la commande.
 
-    > Vous pouvez aussi utiliser l'excellente procédure [whoisactive](http://whoisactive.com/). Elle contient la colonne `percent_complete`.
+> Vous pouvez aussi utiliser l'excellente procédure [whoisactive](http://whoisactive.com/). Elle contient la colonne `percent_complete`.
+
+#### comprendre le statut
+
+La commande en cours peut être en `RUNNING` ou en `SUSPENDED`. bien souvent elle sera en `SUSPENDED`, car elle attend sur le système pour continuer son travail.
+
+Vous trouvez la raison de l'attente dans la colonne `wait_type`, et la durée de l'attente actuelle dans la colonne `wait_time`. La valeur de `wait_time` est en millisecondes.
+
+Les cas classiques de `wait_type` :
+
+* `PAGEIOLATCH_EX` &mdash; La commande DBCC est en train d'attendre sur la lecture de pages de données sur le disque. Si le disque est lent ou saturé, cela ralentira l'opération et vous verrez des attentes importantes de ce type.
 
 <p align="right">
 <i><small>[<a href="https://www.pachadata.com/contact/">Besoin de services avec SQL Server ? Contactez-moi</a>]</small></i>
