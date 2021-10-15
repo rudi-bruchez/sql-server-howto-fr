@@ -107,7 +107,7 @@ Vous trouvez la raison de l'attente dans la colonne `wait_type`, et la durée de
 
 Les cas classiques de `wait_type` :
 
-* `PAGEIOLATCH_EX` &mdash; La commande DBCC est en train d'attendre sur la lecture de pages de données sur le disque. Si le disque est lent ou saturé, cela ralentira l'opération et vous verrez des attentes importantes de ce type.
+* [`PAGEIOLATCH_EX`](https://www.sqlskills.com/help/waits/pageiolatch_ex/) &mdash; La commande DBCC est en train d'attendre sur la lecture de pages de données sur le disque. Si le disque est lent ou saturé, cela ralentira l'opération et vous verrez des attentes importantes de ce type.
 
 <p align="right">
 <i><small>[<a href="https://www.pachadata.com/contact/">Besoin de services avec SQL Server ? Contactez-moi</a>]</small></i>
