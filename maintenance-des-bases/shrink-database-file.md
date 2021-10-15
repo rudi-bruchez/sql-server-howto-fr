@@ -22,19 +22,22 @@ Le shrink sur un fichier de données est une opération lourde et **fragmente fo
 Les commandes Transact-SQL pour effectuer un SHRINK sont :
 
 - `DBCC SHRINKDATABASE` &mdash; pour réduire la taille de tous les fichiers de la base de données : fichier de données et fichiers de journaux de transaction. **N'utilisez pas cette commande**, soyez plus spécifique.
-- `DBCC SHRINKFILE` &mdash; pour réduire la taille d'un fichier spécifique. C'est la commande à privilégier.
+- [`DBCC SHRINKFILE`](https://docs.microsoft.com/fr-fr/sql/t-sql/database-console-commands/dbcc-shrinkfile-transact-sql) &mdash; pour réduire la taille d'un fichier spécifique. C'est la commande à privilégier.
 
 ## Comment réduire un fichier
 
 1. Sélectionnez le fichier à réduire, et décidez d'une taille cible. **Ne réduisez pas le fichier au maximum**, vous voulez conserver de l'espace libre dans le fichier pour le futur. Vous pouvez utiliser la fenêtre de SSMS pour vous faciliter la tâche, et générez le script ensuite. Vous voulez générer le script plutôt que laisser la fenêtre de SSMS exécuter la commande, vous pourrez ainsi mieux maîtriser l'opération, voir les messages dans la fenêtre de résultat de SSMS, et relancer la commande au besoin.
 
     Interface graphique pour réduire un fichier.
+    
     ![réduction](shrink-database-file.01.png)
     
-    Sélectionnez l'opton qui permet de déficihr une taille cible.
+    Sélectionnez l'opton qui permet de définir une taille cible.
+
     ![réduction](shrink-database-file.02.png)
     
     Exportez le script dans une nouvelle fenêtre.
+
     ![réduction](shrink-database-file.03.png)
     
     Le script exporté va ressembler à ceci.
