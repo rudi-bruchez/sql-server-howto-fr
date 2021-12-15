@@ -34,3 +34,7 @@ Ensuite, pour appeler la cmdlet et générer le rapport dans un répertoire.
 New-Item -Name clusterdiag -Path c:\temp -ItemType Directory -Force
 Get-SddcDiagnosticInfo -ClusterName cluster -WriteToPath c:\temp\clusterdiag
 ```
+
+<p align="right">
+<i><small>[<a href="https://www.pachadata.com/contact/">Besoin de services avec SQL Server ? Contactez-moi</a>]</small></i>
+</p>
