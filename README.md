@@ -6,4 +6,4 @@ Aide pour opérations administratives, développement et optimisation dans Micro
 - [Maintenance des bases de données](/maintenance-des-bases)
 - [Verrouillage et transactions](/verrouillage-et-transactions)
 - [Optimisation](/optimisation)
-- [Haut disponibilité](/hadr)
+- [Haute disponibilité](/hadr)
