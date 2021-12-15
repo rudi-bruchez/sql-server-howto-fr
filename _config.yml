@@ -1,2 +1,5 @@
 # theme: jekyll-theme-midnight
 theme: jekyll-theme-slate
+
+title: SQL Server HowTo
+description: Aide pour opérations administratives, développement et optimisation dans Microsoft SQL Server
