@@ -11,7 +11,7 @@ SELECT
 		LEN(CAST(SERVERPROPERTY('ErrorLogFileName') as nvarchar(max))) - LEN('ERRORLOG'));
 ``` 
 
-## diagnostic de WSFC
+## Diagnostic de WSFC
 
 Vous pouvez exporter les journaux du cluster à l'aide de la cmdlet `Get-ClusterLog`
 
