@@ -1,6 +1,4 @@
-# SQL Server HowTo
-
-Aide pour opérations administratives, développement et optimisation dans Microsoft SQL Server
+# Rubriques
 
 - [Howto pour les bases système (tempdb, msdb, etc)](/bases-systeme)
 - [Maintenance des bases de données](/maintenance-des-bases)
