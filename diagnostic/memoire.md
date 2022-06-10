@@ -34,3 +34,26 @@ WITH ROLLUP
 ORDER BY pages_kb DESC
 OPTION (RECOMPILE);
 ```
+
+La mémoire peut être consommée par des assemblies .NET.
+
+Quelles sont les assemblies chargées, et la mémoire qu'elles consomment :
+
+
+```sql
+SELECT dca.appdomain_address
+	  ,dca.appdomain_id
+	  ,dca.appdomain_name
+	  ,dca.creation_time
+	  ,DB_NAME(dca.db_id) AS db
+	  ,dca.state
+	  ,dca.strong_refcount
+	  ,dca.weak_refcount
+	  ,dca.cost
+	  ,dca.value
+	  ,dca.total_processor_time_ms
+	  ,dca.total_allocated_memory_kb
+	  ,dca.survived_memory_kb
+FROM sys.dm_clr_appdomains dca
+OPTION (RECOMPILE);
+```
