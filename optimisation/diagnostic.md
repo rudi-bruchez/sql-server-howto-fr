@@ -1,8 +1,8 @@
-# Comment diagnostiquer les problèmes de performances
+# Comment diagnostiquer les problèmes de performances des requêtes
 
 Si votre serveur SQL présente des lenteurs, vous devez absolument recueillir des indices, pour ne pas supposer des problèmes et des solutions qui ne correspondent pas à la nature du problème.
 
-Si vous étiez médecin, presecririez-vous un traitement sans effectuer de diagnostic ?
+Si vous étiez médecin, prescririez-vous un traitement sans effectuer de diagnostic ?
 
 ## Hypothèses
 
@@ -27,7 +27,7 @@ Utilisez le Query Store pour identifier les requêtes les plus consommatrices : 
 Utilisez une session d'évènements étendus :
 
 - [Exemples de sessions sur mon Github](https://github.com/rudi-bruchez/tsql-scripts/tree/master/extended-events)
-- Une vidéo YouTube sera bientôt postée
+- Pour apprendre à utiliser les évènements étendus, vous trouvez sur ma chaîne Youtube [une vidéo complète sur le sujet]().
 
 Requêtez la vue [dm_exec_query_stats](https://github.com/rudi-bruchez/tsql-scripts/blob/master/diagnostics/execution-stats/dm_exec_query_stats.sql)
 
