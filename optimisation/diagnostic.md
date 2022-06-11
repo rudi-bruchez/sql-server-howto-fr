@@ -27,7 +27,7 @@ Utilisez le Query Store pour identifier les requêtes les plus consommatrices : 
 Utilisez une session d'évènements étendus :
 
 - [Exemples de sessions sur mon Github](https://github.com/rudi-bruchez/tsql-scripts/tree/master/extended-events)
-- Pour apprendre à utiliser les évènements étendus, vous trouvez sur ma chaîne Youtube [une vidéo complète sur le sujet]().
+- Pour apprendre à utiliser les évènements étendus, vous trouvez sur ma chaîne Youtube [une vidéo complète sur le sujet](https://youtu.be/SC7MfYsd-p0).
 
 Requêtez la vue [dm_exec_query_stats](https://github.com/rudi-bruchez/tsql-scripts/blob/master/diagnostics/execution-stats/dm_exec_query_stats.sql)
 
@@ -86,3 +86,8 @@ Lorsque les problèmes se posent, videz le cache de plans à l'aide de la comman
 Vérifiez les statistiques :
     - [article un peu ancien](https://rudi.developpez.com/sqlserver/tutoriel/statistiques/)
     - [requête de diagnostic](https://github.com/rudi-bruchez/tsql-scripts/blob/master/diagnostics/tables/statistics.sql)
+
+
+<p align="right">
+<i><small>[<a href="https://www.pachadata.com/contact/">Besoin de services avec SQL Server ? Contactez-moi</a>]</small></i>
+</p>
