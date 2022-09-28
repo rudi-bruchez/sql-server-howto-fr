@@ -52,6 +52,10 @@ Pour savoir si la configuration de l'instance est concernée :
     - regardez les [attentes](https://www.sqlskills.com/blogs/paul/wait-statistics-or-please-tell-me-where-it-hurts/) de type CXPACKET. Si vous en avez beaucoup, regardez si l'hyperthreading est activé.
     - > The sys.dm_os_latch_stats DMV contains information about the specific latch waits that have occurred in the instance, and if one of the top latch waits is ACCESS_METHODS_DATASET_PARENT, in conjunction with CXPACKET, LATCH_*, and SOS_SCHEDULER_YIELD wait types as the top waits, the level of parallelism on the system is the cause of bottlenecking during query execution, and reducing the 'max degree of parallelism' sp_configure option may be required to resolve the problems.
 
+- Pour optimiser le parallélisme sur l'instance, Configurer les éléments suivants :
+  - [Seuil de coût pour le parallélisme](https://learn.microsoft.com/fr-fr/sql/database-engine/configure-windows/configure-the-cost-threshold-for-parallelism-server-configuration-option) -- à mettre à **50**
+  - [Degré maximum de parallélisme](https://learn.microsoft.com/fr-fr/sql/database-engine/configure-windows/configure-the-max-degree-of-parallelism-server-configuration-option) -- ne pas le laisser à 0 si vous avez plus de huit processeurs. 4 est souvent une bonne valeur pour les serveurs OLTP. Voir les [recommandations](https://learn.microsoft.com/fr-fr/sql/database-engine/configure-windows/configure-the-max-degree-of-parallelism-server-configuration-option?view=sql-server-ver16#recommendations)
+
 #### Configuration des bases
 
 - auto close -- ça peut se sentir -- toujours à FALSE
