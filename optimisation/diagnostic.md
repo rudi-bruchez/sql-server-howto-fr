@@ -23,7 +23,7 @@ D'où peuvent provenir les problèmes de performance ?
 
 ### Serveur mal dimensionné
 
-SQL Server peut très bien fonctionner sur une machine moyenneemnt dimensionnée, si la base de données et les requêtes sont optimisées.
+SQL Server peut très bien fonctionner sur une machine moyennement dimensionnée, si la base de données et les requêtes sont optimisées.
 
 Quelques pistes :
 
@@ -52,17 +52,27 @@ Pour savoir si la configuration de l'instance est concernée :
     - regardez les [attentes](https://www.sqlskills.com/blogs/paul/wait-statistics-or-please-tell-me-where-it-hurts/) de type CXPACKET. Si vous en avez beaucoup, regardez si l'hyperthreading est activé.
     - > The sys.dm_os_latch_stats DMV contains information about the specific latch waits that have occurred in the instance, and if one of the top latch waits is ACCESS_METHODS_DATASET_PARENT, in conjunction with CXPACKET, LATCH_*, and SOS_SCHEDULER_YIELD wait types as the top waits, the level of parallelism on the system is the cause of bottlenecking during query execution, and reducing the 'max degree of parallelism' sp_configure option may be required to resolve the problems.
 
+#### Parallélisme
+
 - Pour optimiser le parallélisme sur l'instance, Configurer les éléments suivants :
   - [Seuil de coût pour le parallélisme](https://learn.microsoft.com/fr-fr/sql/database-engine/configure-windows/configure-the-cost-threshold-for-parallelism-server-configuration-option) -- à mettre à **50**
   - [Degré maximum de parallélisme](https://learn.microsoft.com/fr-fr/sql/database-engine/configure-windows/configure-the-max-degree-of-parallelism-server-configuration-option) -- ne pas le laisser à 0 si vous avez plus de huit processeurs. 4 est souvent une bonne valeur pour les serveurs OLTP. Voir les [recommandations](https://learn.microsoft.com/fr-fr/sql/database-engine/configure-windows/configure-the-max-degree-of-parallelism-server-configuration-option?view=sql-server-ver16#recommendations)
 
+- Depuis SQL Server 2016, vous pouvez configurer le degré de parallélisme par base de données, à l'aide d'une [configuration scopée](https://learn.microsoft.com/en-us/sql/t-sql/statements/alter-database-scoped-configuration-transact-sql).
+
+```sql
+ALTER DATABASE SCOPED CONFIGURATION SET MAXDOP = 1 ;
+```
+
 #### Configuration des bases
 
-- auto close -- ça peut se sentir -- toujours à FALSE
-- création automatique des statistiques -- toujours à vrai
-- laissez les options par défaut des bases.
-- niveau de compatibilité -- le plus élevé possible
-- version du moteur d'estimation de cardinalité
+- **auto close** -- ça peut se sentir -- toujours à FALSE
+- **auto shrink** -- toujours à FALSE. Cette option ne devrait même pas exister.
+- **création automatique des statistiques** -- toujours à vrai
+- **mise à jour automatique des statistiques** -- toujours à vrai
+- En bref : laissez les options par défaut des bases.
+- **niveau de compatibilité** -- le plus élevé possible pour bénéficier des améliorations du moteur relationnel.
+- Gérez au besoin la version du moteur d'estimation de cardinalité (*legacy cardinality estimation*) selon les erreurs d'estimation de cardinalité dans vos requêtes.
 
 ### Requêtes mal écrites qui sont trop longues
 
@@ -81,7 +91,7 @@ Pour savoir si la configuration de l'instance est concernée :
 Plus difficile à identifier. Le comportement attendu est un excès de petites requêtes répétitives, qui exécutent des allers-retours unitaires entre le client et le serveur, au lieu de requêtes ensemblistes. C'est un comportement à changer dans le code client.
 
 - Cherchez, avec une session d'évènements étendus sans filtre de coût de requête, des appels répétitifs de requêtes semblables, par exemple des suites d'inserts ou des `SELECT` unitaires semblables avec des changements de paramètres.
-- Requêtez la vue [dm_exec_query_stats](https://github.com/rudi-bruchez/tsql-scripts/blob/master/diagnostics/execution-stats/dm_exec_query_stats.sql) en cherchant des requêtes peu consommatrices mais exécutées très souvent (triez sur la colonne `execution_count`)
+- Requêtez la vue [dm_exec_query_stats](https://github.com/rudi-bruchez/tsql-scripts/blob/master/diagnostics/execution-stats/query_stats.sql) en cherchant des requêtes peu consommatrices mais exécutées très souvent (triez sur la colonne `execution_count`)
 - Utilisez le Query Store pour identifier les requêtes les plus exécutées.
   - [vidéo : Nicolas Souquet – Tout savoir sur le Query Store](https://youtu.be/Adwtl1QtYvI).
   - [vidéo : Steven Naudet](https://youtu.be/EVchvLCk-IQ)
@@ -90,7 +100,7 @@ Plus difficile à identifier. Le comportement attendu est un excès de petites r
 
 Les blocages sont des attentes sur des verrous posés par d'autres sessions.
 
-Y a-t-il des blocages ? 
+Y a-t-il des blocages ?
 
 - Interrogez la requête suivante : [Paul Randall, tell me where it hurts](https://www.sqlskills.com/blogs/paul/wait-statistics-or-please-tell-me-where-it-hurts/) et cherchez les attentes de type `LCK...`
 - Si vous trouvez des attentes de ce type, approfondissez le diagnostic [à l'aide des instructions suivantes](../verrouillage-et-transactions/blocages.md).
@@ -101,7 +111,7 @@ Y a-t-il des blocages ?
 
 - Identifiez le coût de vos déclencheurs à l'aide de la vue de diagnostic [sys.dm_exec_triggers_stats](https://github.com/rudi-bruchez/tsql-scripts/blob/master/diagnostics/execution-stats/trigger-stats.sql)
 - Cherchez les blocages éventuels avec les outils de la section précédente.
-- Si vous avez des procédures stockées, utilisez la vue [dm_exec_procedure_stats](https://github.com/rudi-bruchez/tsql-scripts/blob/master/diagnostics/stored-procedures/procedure-execution-analysis.sql)
+- Si vous avez des procédures stockées, utilisez la vue [dm_exec_procedure_stats](https://github.com/rudi-bruchez/tsql-scripts/blob/master/diagnostics/execution-stats/stored-procedures/procedure-execution-analysis.sql)
 - Si vous soupçonnez des déclencheurs, des procédures stockées ou des appels de fonctions, créez une session d'évènements étendus avec l'évènement `sp_statement_completed` -- [code pour Azure à adapter pour on prem](https://github.com/rudi-bruchez/tsql-scripts/blob/master/extended-events/azure-sql-database/trace-procedure-create.sql)
 
 ### Manque d'index
@@ -114,7 +124,7 @@ Y a-t-il des blocages ?
 
 ### Problèmes de plans d'exécution, de compilation et de *parameter sniffing*
 
-Lorsque les problèmes se posent, videz le cache de plans à l'aide de la commande suivante : `DBCC FREEPROCCACHE`. Est-ce que cela résoud le problème ? Vous pouvez exécuter cette commande au lieu de redémarrer un serveur SQL.
+Lorsque les problèmes se posent, videz le cache de plans à l'aide de la commande suivante : `DBCC FREEPROCCACHE`. Est-ce que cela résout le problème ? Vous pouvez exécuter cette commande au lieu de redémarrer un serveur SQL.
 
 Vérifiez les statistiques :
     - [requête de diagnostic](https://github.com/rudi-bruchez/tsql-scripts/blob/master/diagnostics/tables/statistics.sql)
