@@ -64,3 +64,7 @@ DBCC SHRINKFILE (N'<nom logique du fichier de journal>' , 200)
 Cette commande essaie de diminuer la taille du fichier à 200 Mo. Cela peut ne pas réussir tout de suite, si la portion active du journal est à la fin du fichier. Réessayez plus tard si la taille n'a pas diminué.
 
 Ne planifiez pas les shrinks. Consultez [cet autre article](./shrink-database-file.md) et [ma vidéo YouTube](https://youtu.be/Bl0p6GREFg8).
+
+<p align="right">
+<i><small>[<a href="https://www.pachadata.com/contact/">Besoin de services avec SQL Server ? Contactez-moi</a>]</small></i>
+</p>

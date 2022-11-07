@@ -10,3 +10,7 @@
 ```powershell
 Remove-DbaBackup -Path '\\dump-sql.naxos.local\repo$\srv-cnet-clu01$CLUSTER-SQL-AG\Century_21\' -BackupFileExtension bak -RetentionPeriod 48h
 ```
+
+<p align="right">
+<i><small>[<a href="https://www.pachadata.com/contact/">Besoin de services avec SQL Server ? Contactez-moi</a>]</small></i>
+</p>

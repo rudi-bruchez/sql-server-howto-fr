@@ -75,3 +75,7 @@ AS BEGIN
 
 END;
 ```
+
+<p align="right">
+<i><small>[<a href="https://www.pachadata.com/contact/">Besoin de services avec SQL Server ? Contactez-moi</a>]</small></i>
+</p>
