@@ -1,6 +1,6 @@
 # theme: jekyll-theme-midnight
-# theme: jekyll-theme-minimal
-theme: minima
+theme: jekyll-theme-minimal
+# theme: minima
 logo: /assets/img/logo.png
 description: Minimal is a theme for GitHub Pages.
 show_downloads: true
